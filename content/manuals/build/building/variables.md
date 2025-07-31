@@ -26,8 +26,7 @@ You can use them to parameterize the build, allowing for more flexible and confi
 
 Build arguments and environment variables are similar.
 They're both declared in the Dockerfile and can be set using flags for the `docker build` command.
-Both can be used to parameterize the build.
-But they each serve a distinct purpose.
+Both can be used to parameterize the build but they each serve a distinct purpose.
 
 ### Build arguments
 
@@ -35,7 +34,7 @@ Build arguments are variables for the Dockerfile itself.
 Use them to parameterize values of Dockerfile instructions.
 For example, you might use a build argument to specify the version of a dependency to install.
 
-Build arguments have no effect on the build unless it's used in an instruction.
+Build arguments have no effect on the build unless they are used in an instruction.
 They're not accessible or present in containers instantiated from the image
 unless explicitly passed through from the Dockerfile into the image filesystem or configuration.
 They may persist in the image metadata, as provenance attestations and in the image history,
@@ -72,10 +71,10 @@ see [`ENV` usage example](#env-usage-example).
 Build arguments are commonly used to specify versions of components,
 such as image variants or package versions, used in a build.
 
-Specifying versions as build arguments lets you build with different versions
-without having to manually update the Dockerfile.
-It also makes it easier to maintain the Dockerfile,
-since it lets you declare versions at the top of the file.
+Using build arguments to specify versions allows you to build with different versions
+without manually updating the Dockerfile.
+This approach also simplifies Dockerfile maintenance
+by allowing you to declare all versions at the top of the file.
 
 Build arguments can also be a way to reuse a value in multiple places.
 For example, if you use multiple flavors of `alpine` in your build,
@@ -110,7 +109,7 @@ CMD ["node", "app.js"]
 
 In this case, the build arguments have default values.
 Specifying their values when you invoke a build is optional.
-To override the defaults, you would use the `--build-arg` CLI flag:
+To override the defaults, use the `--build-arg` CLI flag:
 
 ```console
 $ docker build --build-arg NODE_VERSION=current .
@@ -221,8 +220,8 @@ FROM base AS build
 RUN echo "hello $NAME!"
 ```
 
-The following diagram further exemplifies how build argument
-and environment variable inheritance works for multi-stage builds.
+The following diagram illustrates how build argument
+and environment variable inheritance works in multi-stage builds.
 
 {{< figure src="../../images/build-variables.svg" class="invertible" >}}
 
