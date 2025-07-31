@@ -1,16 +1,16 @@
 ---
 title: Export binaries
 weight: 50
-description: Using Docker builds to create and export executable binaries
+description: Use Docker builds to create and export executable binaries.
 keywords: build, buildkit, buildx, guide, tutorial, build arguments, arg
 aliases:
   - /build/guide/export/
 ---
 
-Did you know that you can use Docker to build your application to standalone
-binaries? Sometimes, you don’t want to package and distribute your application
-as a Docker image. Use Docker to build your application, and use exporters to
-save the output to disk.
+You can use Docker to build your application as a standalone binary. Sometimes,
+you might not want to package and distribute your application as a Docker image.
+Instead, use Docker to build your application and exporters to save the output
+to disk.
 
 The default output format for `docker build` is a container image. That image is
 automatically loaded to your local image store, where you can run a container
@@ -28,10 +28,9 @@ the contents of the build container at the end of the build to the specified
 location on your host's filesystem. This uses the `local`
 [exporter](/manuals/build/exporters/local-tar.md).
 
-The neat thing about this is that you can use Docker's powerful isolation and
-build features to create standalone binaries. This
-works well for Go, Rust, and other languages that can compile to a single
-binary.
+This approach lets you use Docker's isolation and build features to create
+standalone binaries. It works well for Go, Rust, and other languages that
+compile to a single binary.
 
 The following example creates a simple Rust program that prints "Hello,
 World!", and exports the binary to the host filesystem.
