@@ -12,23 +12,23 @@ aliases:
 - /build/guide/multi-platform/
 ---
 
-A multi-platform build refers to a single build invocation that targets
+A multi-platform build is a single build invocation that targets
 multiple different operating system or CPU architecture combinations. When
-building images, this lets you create a single image that can run on multiple
+building images, this lets you create a single image that can can run on multiple
 platforms, such as `linux/amd64`, `linux/arm64`, and `windows/amd64`.
 
 ## Why multi-platform builds?
 
 Docker solves the "it works on my machine" problem by packaging applications
 and their dependencies into containers. This makes it easy to run the same
-application on different environments, such as development, testing, and
+application in different environments, such as development, testing, and
 production.
 
-But containerization by itself only solves part of the problem. Containers
-share the host kernel, which means that the code that's running inside the
-container must be compatible with the host's architecture. This is why you
-can't run a `linux/amd64` container on an arm64 host (without using emulation),
-or a Windows container on a Linux host.
+However, containerization only solves part of the problem. Containers
+share the host kernel meaning the code running inside the
+container must be compatible with the host's architecture. For example, you
+can't run a `linux/amd64` container on an ARM64 host without emulation, or a
+Windows container on a Linux host.
 
 Multi-platform builds solve this problem by packaging multiple variants of the
 same application into a single image. This enables you to run the same image on
@@ -47,23 +47,23 @@ different configuration and set of layers.
 
 When you push a multi-platform image to a registry, the registry stores the
 manifest list and all the individual manifests. When you pull the image, the
-registry returns the manifest list, and Docker automatically selects the
-correct variant based on the host's architecture. For example, if you run a
+registry returns the manifest list. Docker automatically selects the correct
+variant based on the host's architecture. For example, if you run a
 multi-platform image on an ARM-based Raspberry Pi, Docker selects the
 `linux/arm64` variant. If you run the same image on an x86-64 laptop, Docker
 selects the `linux/amd64` variant (if you're using Linux containers).
 
 ## Prerequisites
 
-To build multi-platform images, you first need to make sure that your Docker
-environment is set up to support it. There are two ways you can do that:
+To build multi-platform images, make sure your Docker environment supports it.
+You can do this in two ways:
 
 - You can switch from the "classic" image store to the containerd image store.
 - You can create and use a custom builder.
 
-The "classic" image store of the Docker Engine does not support multi-platform
-images. Switching to the containerd image store ensures that your Docker Engine
-can push, pull, and build multi-platform images.
+The "classic" image store in Docker Engine does not support multi-platform
+images. Switching to the containerd image store lets Docker Engine push, pull,
+and build multi-platform images.
 
 Creating a custom builder that uses a driver with multi-platform support,
 such as the `docker-container` driver, will let you build multi-platform images
@@ -75,8 +75,7 @@ build --push`.
 {{< tabs >}}
 {{< tab name="containerd image store" >}}
 
-The steps for enabling the containerd image store depends on whether you're
-using Docker Desktop or Docker Engine standalone:
+How you enable the containerd image store depends on your setup:
 
 - If you're using Docker Desktop, enable the containerd image store in the
   [Docker Desktop settings](/manuals/desktop/features/containerd.md).
@@ -120,19 +119,18 @@ $ docker buildx build --platform linux/amd64,linux/arm64 .
 
 ## Strategies
 
-You can build multi-platform images using three different strategies,
-depending on your use case:
+You can build multi-platform images using three strategies:
 
-1. Using emulation, via [QEMU](#qemu)
-2. Use a builder with [multiple native nodes](#multiple-native-nodes)
-3. Use [cross-compilation](#cross-compilation) with multi-stage builds
+1. Use emulation with [QEMU](#qemu).
+1. Use a builder with [multiple native nodes](#multiple-native-nodes).
+1. Use [cross-compilation](#cross-compilation) with multi-stage builds.
 
 ### QEMU
 
-Building multi-platform images under emulation with QEMU is the easiest way to
-get started if your builder already supports it. Using emulation requires no
-changes to your Dockerfile, and BuildKit automatically detects the
-architectures that are available for emulation.
+Building multi-platform images with QEMU emulation is the easiest way to get
+started if your builder supports it. Emulation requires no changes to your
+Dockerfile. BuildKit automatically detects which architectures are available
+for emulation.
 
 > [!NOTE]
 >
@@ -159,20 +157,19 @@ installing QEMU are:
   `fix_binary` flag
 
 Use the [`tonistiigi/binfmt`](https://github.com/tonistiigi/binfmt) image to
-install QEMU and register the executable types on the host with a single
-command:
+install QEMU and register the executable types on the host with one command:
 
 ```console
 $ docker run --privileged --rm tonistiigi/binfmt --install all
 ```
 
 This installs the QEMU binaries and registers them with
-[`binfmt_misc`](https://en.wikipedia.org/wiki/Binfmt_misc), enabling QEMU to
+[`binfmt_misc`](https://en.wikipedia.org/wiki/Binfmt_misc), so QEMU can
 execute non-native file formats for emulation.
 
-Once QEMU is installed and the executable types are registered on the host OS,
-they work transparently inside containers. You can verify your registration by
-checking if `F` is among the flags in `/proc/sys/fs/binfmt_misc/qemu-*`.
+Once QEMU is installed and the executable types are registered, they work
+transparently inside containers. You can verify registration by checking if
+`F` is among the flags in `/proc/sys/fs/binfmt_misc/qemu-*`.
 
 ### Multiple native nodes
 
@@ -181,8 +178,8 @@ that QEMU can't handle, and also provides better performance.
 
 You can add additional nodes to a builder using the `--append` flag.
 
-The following command creates a multi-node builder from Docker contexts named
-`node-amd64` and `node-arm64`. This example assumes that you've already added
+The following commands create a multi-node builder from Docker contexts named
+`node-amd64` and `node-arm64`. This example assumes you have already added
 those contexts.
 
 ```console
@@ -217,11 +214,10 @@ For more information, see [Docker Build Cloud](/manuals/build-cloud/_index.md).
 
 ### Cross-compilation
 
-Depending on your project, if the programming language you use has good support
-for cross-compilation, you can leverage multi-stage builds to build binaries
-for target platforms from the native architecture of the builder. Special build
-arguments, such as `BUILDPLATFORM` and `TARGETPLATFORM`, are automatically
-available for use in your Dockerfile.
+If your programming language supports cross-compilation, you can use
+multi-stage builds to build binaries for target platforms from the builder's
+native architecture. Special build arguments, such as `BUILDPLATFORM` and
+`TARGETPLATFORM`, are available in your Dockerfile.
 
 In the following example, the `FROM` instruction is pinned to the native
 platform of the builder (using the `--platform=$BUILDPLATFORM` option) to
@@ -288,8 +284,8 @@ Steps:
    $ docker run --rm multi-platform cat /arch
    ```
 
-   - If you're running on an x86-64 machine, you should see `x86_64`.
-   - If you're running on an ARM machine, you should see `aarch64`.
+   - On an x86-64 machine, you see `x86_64`.
+   - On an ARM machine, you see `aarch64`.
 
 ### Multi-platform Neovim build using Docker Build Cloud
 
@@ -298,12 +294,12 @@ Cloud to compile and export [Neovim](https://github.com/neovim/neovim) binaries
 for the `linux/amd64` and `linux/arm64` platforms.
 
 Docker Build Cloud provides managed multi-node builders that support native
-multi-platform builds without the need for emulation, making it much faster to
-do CPU-intensive tasks like compilation.
+multi-platform builds without emulation, making CPU-intensive tasks like
+compilation much faster.
 
 Prerequisites:
 
-- You've [signed up for Docker Build Cloud and created a builder](/manuals/build-cloud/setup.md)
+- [Sign up for Docker Build Cloud and create a builder](/manuals/build-cloud/setup.md)
 
 Steps:
 
@@ -399,7 +395,7 @@ Steps:
    WORKDIR /app
    ADD https://github.com/dvdksn/buildme.git#eb6279e0ad8a10003718656c6867539bd9426ad8 .
    RUN go build -o server .
-   
+
    FROM alpine
    COPY --from=build /app/server /server
    ENTRYPOINT ["/server"]
@@ -421,7 +417,7 @@ Steps:
      `TARGETOS` and `TARGETARCH` build arguments available to the commands in
      this stage.
    - Set the `GOOS` and `GOARCH` environment variables to the values of
-     `TARGETOS` and `TARGETARCH`. The Go compiler uses these variables to do
+     `TARGETOS` and `TARGETARCH`. The Go compiler uses these variables for
      cross-compilation.
 
    {{< tabs >}}
@@ -491,6 +487,6 @@ documentation for your programming language to learn more about cross-compiling
 for different platforms.
 
 > [!TIP]
-> You may also want to consider checking out
+> Also see
 > [xx - Dockerfile cross-compilation helpers](https://github.com/tonistiigi/xx).
 > `xx` is a Docker image containing utility scripts that make cross-compiling with Docker builds easier.
