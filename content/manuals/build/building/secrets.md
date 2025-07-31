@@ -7,34 +7,33 @@ keywords: build, secrets, credentials, passwords, tokens, ssh, git, auth, http
 tags: [Secrets]
 ---
 
-A build secret is any piece of sensitive information, such as a password or API
-token, consumed as part of your application's build process.
+A build secret is sensitive information, such as a password or API token, used
+during your application's build process.
 
-Build arguments and environment variables are inappropriate for passing secrets
-to your build, because they persist in the final image. Instead, you should use
-secret mounts or SSH mounts, which expose secrets to your builds securely.
+Do not use build arguments or environment variables to pass secrets to your
+build because they persist in the final image. Instead, use secret mounts or SSH
+mounts to expose secrets securely during the build.
 
 ## Types of build secrets
 
-- [Secret mounts](#secret-mounts) are general-purpose mounts for passing
-  secrets into your build. A secret mount takes a secret from the build client
-  and makes it temporarily available inside the build container, for the
-  duration of the build instruction. This is useful if, for example, your build
-  needs to communicate with a private artifact server or API.
-- [SSH mounts](#ssh-mounts) are special-purpose mounts for making SSH sockets
-  or keys available inside builds. They're commonly used when you need to fetch
-  private Git repositories in your builds.
+- [Secret mounts](#secret-mounts) let you pass secrets into your build. A
+  secret mount takes a secret from the build client and makes it available
+  inside the build container for the duration of the build instruction. For
+  example, use a secret mount if your build needs to access a private artifact
+  server or API.
+- [SSH mounts](#ssh-mounts) make SSH sockets or keys available inside builds.
+  Use SSH mounts to fetch private Git repositories during your build.
 - [Git authentication for remote contexts](#git-authentication-for-remote-contexts)
-  is a set of pre-defined secrets for when you build with a remote Git context
-  that's also a private repository. These secrets are "pre-flight" secrets:
-  they are not consumed within your build instruction, but they're used to
-  provide the builder with the necessary credentials to fetch the context.
+  provides pre-defined secrets for builds that use a remote Git context from a
+  private repository. These "pre-flight" secrets are not consumed by build
+  instructions, but let the builder fetch the context with the right
+  credentials.
 
 ## Using build secrets
 
 For secret mounts and SSH mounts, using build secrets is a two-step process.
-First you need to pass the secret into the `docker build` command, and then you
-need to consume the secret in your Dockerfile.
+First, pass the secret into the `docker build` command. Then, consume the
+secret in your Dockerfile.
 
 To pass a secret to a build, use the [`docker build --secret`
 flag](/reference/cli/docker/buildx/build.md#secret), or the
