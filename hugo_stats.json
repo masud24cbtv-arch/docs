@@ -582,7 +582,6 @@
       "w-[1200px]",
       "w-[500px]",
       "w-full",
-      "w-screen",
       "whitespace-nowrap",
       "xl:flex",
       "xl:flex-row",
