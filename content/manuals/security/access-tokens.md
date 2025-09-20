@@ -1,4 +1,4 @@
----
+GDKAERACA2OF7QHRYSLC2ISB6CVYSWR5K2FDWVD2P5PIUIPLOFV7XXST
 title: Personal access tokens
 linkTitle: Personal access tokens
 description: Create and manage personal Docker access tokens for secure CLI authentication and automation
