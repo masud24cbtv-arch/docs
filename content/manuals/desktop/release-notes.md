@@ -15,7 +15,10 @@ aliases:
 - /desktop/linux/release-notes/
 - /mackit/release-notes/
 weight: 220
+outputs: ["HTML", "markdown", "RSS"]
+type: "desktop-release"
 ---
+{{< rss-button feed="/desktop/release-notes/index.xml" text="Subscribe to Docker Desktop RSS feed" >}}
 
 <!-- vale off -->
 
@@ -30,6 +33,140 @@ For more frequently asked questions, see the [FAQs](/manuals/desktop/troubleshoo
 > [!WARNING]
 >
 > If you're experiencing malware detection issues on Mac, follow the steps documented in [docker/for-mac#7527](https://github.com/docker/for-mac/issues/7527).
+
+## 4.47.0
+
+{{< release-date date="2025-09-25" >}}
+
+{{< desktop-install-v2 all=true win_arm_release="Early Access" version="4.47.0" build_path="/206054/" >}}
+
+### Security
+
+- Fixed [CVE-2025-10657](https://www.cve.org/CVERecord?id=CVE-2025-10657) where the Enhanced Container Isolation [Docker Socket command restrictions](../enterprise/security/hardened-desktop/enhanced-container-isolation/config.md#command-restrictions) feature was not working properly in Docker Desktop 4.46.0 only (the configuration for it was being ignored).
+
+### New
+
+- Added dynamic MCP server discovery and support to Docker's MCP catalog.
+- With Enhanced Container Isolation, administrators can now block `docker plugin` and `docker login` commands in containers with Docker socket mounts.
+- Added a new Docker Model Runner command. With `docker model requests` you can fetch requests and responses.
+
+### Upgrades
+
+- [Docker Compose v2.39.4](https://github.com/docker/compose/releases/tag/v2.39.4)
+- [Kubernetes v1.34.1](https://github.com/kubernetes/kubernetes/releases/tag/v1.34.1)
+  - [CNI plugins v1.7.1](https://github.com/containernetworking/plugins/releases/tag/v1.7.1)
+  - [cri-tools v1.33.0](https://github.com/kubernetes-sigs/cri-tools/releases/tag/v1.33.0)
+  - [cri-dockerd v0.3.20](https://github.com/Mirantis/cri-dockerd/releases/tag/v0.3.20)
+- Docker Debug `v0.0.44`
+
+### Bug fixes and enhancements
+
+#### For all platforms
+
+- You can now search for MCP servers more easily with filters, sorting, and improved search functionality.
+- Docker Debug no longer hangs when debugging containers that have environment variables set to an empty value.
+- Enhanced Docker Model Runner with rich response rendering in the CLI, conversational context in the Docker Desktop Dashboard, and resumable downloads.
+
+#### For Mac
+
+- Removed the `com.apple.security.cs.allow-dyld-environment-variables` entitlement which allow a signed, arbitrary dynamic library to be loaded with Docker Desktop via the `DYLD_INSERT_LIBRARIES` environment variable.
+- Fixed a regression where config profile sign-in enforcement broke for some customer environments.
+- Fixed a bug that sometimes caused the `docker model package` command to hang when writing to the local content store (without the `--push` flag).
+- Fixed a bug where containers started with the restart policy `unless-stopped` were never restarted. Fixes [docker/for-mac#7744](https://github.com/docker/for-mac/issues/7744).
+
+#### For Windows
+
+- Fixed the Goose MCP client connection on Windows for the Docker MCP Toolkit.
+- Addressed an issue with the "Skipping integration" of a WSL distro option, after a failed integration attempt.
+- Fixed a bug that sometimes caused the `docker model package` command to hang when writing to the local content store (without the `--push` flag).
+
+## 4.46.0
+
+{{< release-date date="2025-09-11" >}}
+
+{{< desktop-install-v2 all=true win_arm_release="Early Access" version="4.46.0" build_path="/204649/" >}}
+
+### New
+
+- Added a new Learning center walkthrough for Docker MCP Toolkit and other onboarding improvements.
+- Administrators can now control [PAC configurations with Settings Management](/manuals/enterprise/security/hardened-desktop/settings-management/configure-json-file.md#proxy-settings).
+- The update experience has been redesigned to make it easier to understand and manage updates for Docker Desktop and its components.
+
+### Upgrades
+
+- [Docker Buildx v0.28.0](https://github.com/docker/buildx/releases/tag/v0.28.0)
+- [Docker Engine v28.4.0](https://docs.docker.com/engine/release-notes/28/#2840)
+
+### Bug fixes and enhancements
+
+#### For all platforms
+
+- With the Docker CLI, you can now set the `GODEBUG` environment variable when the key-value pair (`"GODEBUG":"..."`) exists inside the Docker context metadata. This means certificates that have negative serial numbers in the CLI binaries are supported by default.
+- Updated the Docker Subscription Service Agreement link to point to the latest version.
+
+#### For Mac
+
+- Improved the security of Docker Model Runner by enabling sandboxing of the `llama.cpp` inference processes.
+- Fixed a bug which caused Docker Desktop to start slowly and appear frozen. Fixes [docker/for-mac#7671](https://github.com/docker/for-mac/issues/7671).
+
+#### For Windows
+
+- Improved the security of Docker Model Runner by enabling sandboxing of the `llama.cpp` inference processes.
+
+#### For Linux
+
+- Fixed a path issue in the RHEL post-uninstall sequence.
+
+## 4.45.0
+
+{{< release-date date="2025-08-28" >}}
+
+{{< desktop-install-v2 all=true win_arm_release="Early Access" version="4.45.0" build_path="/203075/" >}}
+
+### New
+
+- [Docker Model Runner](/manuals/ai/model-runner/_index.md) is now generally available.
+
+### Upgrades
+
+- [Docker Compose v2.39.2](https://github.com/docker/compose/releases/tag/v2.39.2)
+- [Docker Buildx v0.27.0](https://github.com/docker/buildx/releases/tag/v0.27.0)
+- [Docker Scout CLI v1.18.3](https://github.com/docker/scout-cli/releases/tag/v1.18.3)
+- [Docker Engine v28.3.3](https://docs.docker.com/engine/release-notes/28/#2833)
+
+### Bug fixes and enhancements
+
+#### For all platforms
+
+- Fixed a bug that caused the `com.docker.diagnose` to crash when uploading a diagnostics bundle behind a proxy that requires authentication.
+- The `kind` dependency image `envoyproxy/envoy` was upgraded from v1.32.0 to v1.32.6. If you mirror `kind` images, ensure your mirrors are updated.
+
+#### For Mac
+
+- Fixed a bug that caused Docker Desktop to crash after the laptop woke from sleep. Fixes [docker/for-mac#7741](https://github.com/docker/for-mac/issues/7741).
+- Fixed an issue where the VM would sometimes fail with the error **The virtual machine stopped unexpectedly.**
+- Fixed a bug that would break port mappings when a container was connected to or disconnected from a network after it was started. Fixes [docker/for-mac#7693](https://github.com/docker/for-mac/issues/7693).
+
+#### For Windows
+
+- Fixed a bug that prevented CLI plugins from being deployed to `~/.docker/cli-plugins` by default when users lacked the correct permissions.
+- Fixed a bug where relocating the WSL data distribution would fail if the `docker-desktop` distribution was not present.
+- Fixed a typo in the WSL install URL in the Docker Desktop Dashboard.
+- Fixed an issue where certain WSL distros would fail to integrate. Fixes [docker/for-win#14686](https://github.com/docker/for-win/issues/14686)
+
+## 4.44.3
+
+{{< release-date date="2025-08-20" >}}
+
+{{< desktop-install-v2 all=true win_arm_release="Early Access" version="4.44.3" build_path="/202357/" >}}
+
+### Security
+
+- Fixed [CVE-2025-9074](https://www.cve.org/CVERecord?id=CVE-2025-9074) where a malicious container running on Docker Desktop could access the Docker Engine and launch additional containers without requiring the Docker socket to be mounted. This could allow unauthorized access to user files on the host system. Enhanced Container Isolation (ECI) does not mitigate this vulnerability.
+
+### Bug fixes and enhancements
+
+- Fixed a bug which caused the Docker Offload dialog to block users from accessing the dashboard.
 
 ## 4.44.2
 
@@ -86,7 +223,7 @@ For more frequently asked questions, see the [FAQs](/manuals/desktop/troubleshoo
 - [Docker Model CLI v0.1.36](https://github.com/docker/model-cli/releases/tag/v0.1.36)
 - [Docker Desktop CLI v0.2.0](/manuals/desktop/features/desktop-cli.md)
 
-### Security 
+### Security
 
 We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266), a critical vulnerability affecting the NVIDIA Container Toolkit in CDI mode up to version 1.17.7. Docker Desktop includes version 1.17.8, which is not impacted. However, older versions of Docker Desktop that bundled earlier toolkit versions may be affected if CDI mode was manually enabled. Uprade to Docker Desktop 4.44 or later to ensure you're using the patched version.
 
@@ -113,6 +250,7 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 - Fixed a bug preventing Traefik from autodetecting containers' ports. Fixes [docker/for-mac#7693](https://github.com/docker/for-mac/issues/7693).
 - Fixed a bug that caused port mappings to break when a container was connected to or disconnected from a network after it was started. Fixes [docker/for-mac#7693](https://github.com/docker/for-mac/issues/7693#issuecomment-3131427879).
 - Removed eBPF which blocked `io_uring`. To enable `io_uring` in a container, use `--security-opt seccomp=unconfined`. Fixes [docker/for-mac#7707](https://github.com/docker/for-mac/issues/7707).
+- Docker Model Runner now supports GPT OSS models.
 
 #### For Windows
 
@@ -121,6 +259,7 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 - Fixed a bug where Docker Desktop could leak a `com.docker.build` process and fail to start. Fixed [docker/for-win#14840](https://github.com/docker/for-win/issues/14840).
 - Fixed a bug that was preventing Docker Desktop Kubernetes in kind mode from starting when using WSL with `cgroups v1` and Enhanced Container Isolation (ECI) is enabled.
 - Fixed a typo in the WSL installation URL in the UI.
+- Docker Model Runner now supports GPT OSS models
 
 ## 4.43.2
 
@@ -503,8 +642,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 
 {{< release-date date="2025-01-30" >}}
 
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.38.0" build_path="/181591/" >}}
-
 ### New
 
 - Installing Docker Desktop via the PKG installer is now generally available.
@@ -570,8 +707,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 
 {{< release-date date="2025-01-09" >}}
 
-{{< desktop-install-v2 mac=true version="4.37.2" build_path="/179585/" >}}
-
 ### Bug fixes and enhancements
 
 #### For Mac
@@ -587,8 +722,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 ## 4.37.1
 
 {{< release-date date="2024-12-17" >}}
-
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.37.1" build_path="/178610/" >}}
 
 ### Bug fixes and enhancements
 
@@ -606,8 +739,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 ## 4.37.0
 
 {{< release-date date="2024-12-12" >}}
-
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.37.0" build_path="/178034/" >}}
 
 ### New
 
@@ -667,8 +798,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 
 {{< release-date date="2025-01-09" >}}
 
-{{< desktop-install-v2 mac=true version="4.36.1" build_path="/179655/" >}}
-
 ### Bug fixes and enhancements
 
 #### For Mac
@@ -684,8 +813,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 ## 4.36.0
 
 {{< release-date date="2024-11-18" >}}
-
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.36.0" build_path="/175267/" >}}
 
 ### New
 
@@ -747,7 +874,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 
 {{< release-date date="2025-01-09" >}}
 
-{{< desktop-install-v2 mac=true version="4.35.2" build_path="/179656/" >}}
 
 ### Bug fixes and enhancements
 
@@ -765,8 +891,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 
 {{< release-date date="2024-10-30" >}}
 
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.35.1" build_path="/173168/" >}}
-
 #### For all platforms
 
 - Fixed a bug where Docker Desktop would incorrectly bind to port `8888`. Fixes [docker/for-win#14389](https://github.com/docker/for-win/issues/14389) and [docker/for-mac#7468](https://github.com/docker/for-mac/issues/7468)
@@ -774,8 +898,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 ## 4.35.0
 
 {{< release-date date="2024-10-24" >}}
-
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.35.0" build_path="/172550/" >}}
 
 ### New
 
@@ -851,8 +973,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 
 {{< release-date date="2025-01-09" >}}
 
-{{< desktop-install-v2 mac=true version="4.34.4" build_path="/179671/" >}}
-
 ### Bug fixes and enhancements
 
 #### For Mac
@@ -885,8 +1005,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 
 {{< release-date date="2024-09-12" >}}
 
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.34.2" build_path="/167172/" >}}
-
 ### Bug fixes and enhancements
 
 #### For all platforms
@@ -913,8 +1031,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 ## 4.34.0
 
 {{< release-date date="2024-08-29" >}}
-
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.34.0" build_path="/165256/" >}}
 
 ### New
 
@@ -976,8 +1092,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 
 {{< release-date date="2025-01-09" >}}
 
-{{< desktop-install-v2 mac=true version="4.33.2" build_path="/179689/" >}}
-
 ### Bug fixes and enhancements
 
 #### For Mac
@@ -993,8 +1107,6 @@ We are aware of [CVE-2025-23266](https://nvd.nist.gov/vuln/detail/CVE-2025-23266
 ## 4.33.1
 
 {{< release-date date="2024-07-31" >}}
-
-{{< desktop-install-v2 win=true win_arm_release="Beta" version="4.33.0" build_path="/161083/" >}}
 
 ### Bug fixes and enhancements
 
@@ -1098,7 +1210,6 @@ For more information, see [microsoft/WSL#11794](https://github.com/microsoft/WSL
 
 {{< release-date date="2024-07-04" >}}
 
-{{< desktop-install-v2 all=true win_arm_release="Beta" version="4.32.0" build_path="/157355/" >}}
 
 ### New
 
@@ -1258,8 +1369,6 @@ For more information, see [microsoft/WSL#11794](https://github.com/microsoft/WSL
 
 {{< release-date date="2024-05-06" >}}
 
-{{< desktop-install all=true win_arm_release="Beta" version="4.30.0" build_path="/149282/" >}}
-
 ### New
 
 #### For all platforms
@@ -1339,8 +1448,6 @@ This can be resolved by adding the user to the **docker-users** group. Before st
 ## 4.29.0
 
 {{< release-date date="2024-04-08" >}}
-
-{{< desktop-install all=true win_arm_release="Beta" version="4.29.0" build_path="/145265/" >}}
 
 ### New
 

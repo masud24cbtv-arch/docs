@@ -12,29 +12,47 @@ This guide shows you how to go from zero to running a Docker Hardened Image
 (DHI) using a real example. While the steps use a specific image as an
 example, they can be applied to any DHI.
 
-## Step 1: Sign up and subscribe to DHI for access
+> [!TIP]
+>
+> You can keep using the same tools and workflows you already know when moving
+> to DHI from other images on Docker Hub, such as Bitnami public catalog images.
+> Note that [Bitnami announced](https://github.com/bitnami/charts/issues/35164)
+> that its public catalog images will no longer be available after September 29,
+> 2025.
+>
+> In most cases, migrating is as simple as updating the image reference in your
+> configuration or commands. Start with this guide, then see the [migration
+> guide](./how-to/migrate.md) for more details and examples.
 
-To access Docker Hardened Images, your organization must [sign
-up](https://www.docker.com/products/hardened-images/#getstarted) and subscribe.
+## Step 1: Start a free trial to access DHI
+
+You can browse the Docker Hardened Images catalog without a subscription, but to
+use an image, you must either [contact sales to
+subscribe](https://www.docker.com/products/hardened-images/#getstarted) or start
+a free trial for an [organization](/admin/organization/). This guide walks you
+through starting a free trial.
+
+To start a free trial:
+
+1. Go to the Hardened Images catalog in [Docker
+   Hub](https://hub.docker.com/hardened-images/catalog) and sign in.
+2. Select **Start trial** and follow the on-screen instructions.
 
 ## Step 2: Find an image to use
 
-Once subscribed, Docker Hardened Images will appear under your organization's
-namespace on Docker Hub.
-
-1. Go to [Docker Hub](https://hub.docker.com) and sign in.
-2. Select **My Hub** in the top navigation.
-3. In the left sidebar, choose your organization that has DHI access.
-4. In the left sidebar, select **Hardened Images** > **Catalog**.
+1. Go to the Hardened Images catalog in [Docker
+   Hub](https://hub.docker.com/hardened-images/catalog) and sign in.
+2. In the left sidebar, choose your organization that has DHI access.
+3. In the left sidebar, select **Hardened Images** > **Catalog**.
 
    ![Docker Hub sidebar showing DHI catalog](./images/dhi-catalog.png)
 
-5. Use the search bar or filters to find an image (e.g., `python`, `node`,
+4. Use the search bar or filters to find an image (e.g., `python`, `node`,
    `golang`). For this guide, use the Python image as an example.
 
     ![DHI catalog with Python repository shown](./images/dhi-python-search.png)
 
-6. Select the Python repository to view its details.
+5. Select the Python repository to view its details.
 
 Continue to the next step to mirror the image. To dive deeper into exploring
 images see [Explore Docker Hardened Images](./how-to/explore.md).

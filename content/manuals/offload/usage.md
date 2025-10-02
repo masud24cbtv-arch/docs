@@ -8,13 +8,20 @@ keywords: cloud, usage, cloud minutes, shared cache, top repositories, cloud bui
 
 {{< summary-bar feature_name="Docker Offload" >}}
 
+> [!NOTE]
+>
+> All free trial usage granted for the Docker Offload Beta expire after 90
+> days from the time they are granted. To continue using Docker Offload after
+> your usage expires, you can enable on-demand usage at [Docker Home
+> Billing](https://app.docker.com/billing).
+
 ## Docker Offload billing
 
 For Docker Offload, you can view and configure billing on the **Docker Offload**
 page in [Docker Home Billing](https://app.docker.com/billing). On this page, you
 can:
 
-- View your included budget
+- View your included usage
 - View rates for cloud resources
 - Enable or disable on-demand usage
 - Add or change payment methods

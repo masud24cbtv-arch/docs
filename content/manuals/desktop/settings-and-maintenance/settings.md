@@ -249,7 +249,7 @@ and automatically uses these settings for signing in to Docker, for pulling and 
 container Internet access. If the proxy requires authorization then Docker Desktop dynamically asks
 the developer for a username and password. All passwords are stored securely in the OS credential store.
 Note that only the `Basic` proxy authentication method is supported so we recommend using an `https://`
-URL for your HTTP/HTTPS proxies to protect passwords while in transit on the network. Docker Desktop
+URL of your HTTP/HTTPS proxies to protect passwords while in transit on the network. Docker Desktop
 supports TLS 1.3 when communicating with proxies.
 
 To set a different proxy for Docker Desktop, turn on **Manual proxy configuration** and enter a single
@@ -262,7 +262,7 @@ The HTTPS proxy settings used for scanning images are set using the `HTTPS_PROXY
 
 > [!NOTE]
 >
-> If you are using a PAC file hosted on a web server, make sure to add the MIME type `application/x-ns-proxy-autoconfig` for the `.pac` file extension on the server or website. Without this configuration, the PAC file may not be parsed correctly.
+> If you are using a PAC file hosted on a web server, make sure to add the MIME type `application/x-ns-proxy-autoconfig` for the `.pac` file extension on the server or website. Without this configuration, the PAC file may not be parsed correctly. For more details on PAC files and Docker Desktop, see [Hardened Docker Desktop](/manuals/enterprise/security/hardened-desktop/air-gapped-containers.md#proxy-auto-configuration-files)
 
 > [!IMPORTANT]
 > You cannot configure the proxy settings using the Docker daemon configuration
@@ -278,7 +278,7 @@ The HTTPS proxy settings used for scanning images are set using the `HTTPS_PROXY
 
 If your proxy uses Basic authentication, Docker Desktop prompts developers for a username and password and caches the credentials. All passwords are stored securely in the OS credential store. It will request re-authentication if that cache is removed.
 
-It's recommended that you use an `https://` URL for HTTP/HTTPS proxies to protect passwords during network transit. Docker Desktop also supports TLS 1.3 for communication with proxies.
+It's recommended that you use an `https://` URL of HTTP/HTTPS proxies to protect passwords during network transit. Docker Desktop also supports TLS 1.3 for communication with proxies.
 
 ##### Kerberos and NTLM authentication
 
@@ -441,26 +441,21 @@ Select **Reset Kubernetes cluster** to delete all stacks and Kubernetes resource
 For more information about using the Kubernetes integration with Docker Desktop,
 see [Deploy on Kubernetes](/manuals/desktop/features/kubernetes.md).
 
-## Software Updates
+## Software updates
 
-The **Software Updates** tab notifies you of any updates available to Docker Desktop.
+The **Software updates** tab lets you manage your Docker Desktop updates. 
 When there's a new update, you can choose to download the update right away, or
 select the **Release Notes** option to learn what's included in the updated version.
 
-Turn off the check for updates by clearing the **Automatically check for updates**
-check box. This disables notifications in the Docker menu and the notification
-badge that appears on the Docker Desktop Dashboard. To check for updates manually, select
-the **Check for updates** option in the Docker menu.
+The **Automatically check for updates** setting notifies you of any updates available to Docker Desktop in the Docker menu and the footer of the Docker Desktop Dashboard. This is turned on by default. 
 
 To allow Docker Desktop to automatically download new updates in the background,
 select **Always download updates**. This downloads newer versions of Docker Desktop
 when an update becomes available. After downloading the update, select
-**Apply and Restart** to install the update. You can do this either through the
+**Apply and restart** to install the update. You can do this either through the
 Docker menu or in the **Updates** section in the Docker Desktop Dashboard.
 
-> [!TIP]
-> 
-> With Docker Desktop version 4.38 and later, components of Docker Desktop, such as Docker Compose, Docker Scout, and the Docker CLI, can be updated independently without the need for a full restart. This feature is still in Beta. 
+The **Automatically update components** setting checks whether components of Docker Desktop, such as Docker Compose, Docker Scout, and the Docker CLI, can be updated independently without the need for a full restart. This is turned on by default. 
 
 ## Extensions
 

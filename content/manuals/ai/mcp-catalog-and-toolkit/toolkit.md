@@ -1,17 +1,25 @@
 ---
-title: MCP Toolkit
+title: Docker MCP Toolkit
+linkTitle: MCP Toolkit
 description: Use the MCP Toolkit to set up MCP servers and MCP clients.
 keywords: Docker MCP Toolkit, MCP server, MCP client, AI agents
+weight: 30
 aliases:
   - /desktop/features/gordon/mcp/gordon-mcp-server/
   - /ai/gordon/mcp/gordon-mcp-server/
 ---
+
+{{< summary-bar feature_name="Docker MCP Toolkit" >}}
 
 The Docker MCP Toolkit is a gateway that lets you set up, manage, and run
 containerized MCP servers and connect them to AI agents. It removes friction
 from tool usage by offering secure defaults, one-click setup, and support for a
 growing ecosystem of LLM-based clients. It is the fastest way from MCP tool
 discovery to local execution.
+
+> [!NOTE]
+> If you need to run your own MCP gateway,
+> see [Docker MCP Gateway](../mcp-gateway/_index.md).
 
 ## Key features
 
@@ -41,15 +49,19 @@ container as the server or in dedicated containers:
 {{< tabs group="" >}}
 {{< tab name="Single container">}}
 
-![Screenshot showing a single-container MCP Toolkit setup.](/assets/images/mcp_servers.png)
+![Screenshot showing a single-container MCP Toolkit setup.](./images/mcp-servers.svg)
 
 {{< /tab >}}
 {{< tab name="Separate containers">}}
 
-![Screenshot showing a multi-container MCP Toolkit setup.](/assets/images/mcp_servers_2.png)
+![Screenshot showing a multi-container MCP Toolkit setup.](./images/mcp-servers-2.svg)
 
 {{< /tab >}}
 {{</tabs >}}
+
+>[!NOTE]
+>
+> The Docker MCP Toolkit was originally released as an extension. This extension is now deprecated and should be uninstalled.
 
 ## Security
 
@@ -79,42 +91,11 @@ Security at runtime is enforced through resource and access limitations:
 - Interception of tool requests: Requests to and from tools that contain sensitive
   information such as secrets are blocked.
 
-## Enable Docker MCP Toolkit
-
-1. Open the Docker Desktop settings and select **Beta features**.
-2. Select **Enable Docker MCP Toolkit**.
-3. Select **Apply**.
-
->[!NOTE]
->
-> This feature started as the MCP Toolkit _extension_. This extension is now deprecated
->and should be uninstalled.
-
-## Install an MCP server
-
-To install an MCP server:
-
-1. In Docker Desktop, select **MCP Toolkit** and select the **Catalog** tab.
-   When you select a server you can see the following
-   information:
-
-   - Tool name and description
-   - Partner/publisher
-   - The list of callable tools the server provides.
-
-2. Find the MCP server of your choice and select the **Plus** icon.
-3. Optional: Some servers require extra configuration. To configure them, select
-   the **Config** tab and follow the instructions available on the repository of the provider of the MCP server.
-
-> [!TIP]
-> By default, the Gordon [client](#install-an-mcp-client) is enabled,
-> which means Gordon can automatically interact with your MCP servers.
-
 To learn more about the MCP server catalog, see [Catalog](catalog.md).
 
 ### Example: Use the **GitHub Official** MCP server
 
-Imagine you want to enable Ask Gordon to interact with your GitHub account:
+Imagine you want to enable [Ask Gordon](/manuals/ai/gordon/_index.md) to interact with your GitHub account:
 
 1. From the **MCP Toolkit** menu, select the **Catalog** tab and find
    the **GitHub Official** server and add it.
@@ -129,17 +110,10 @@ Imagine you want to enable Ask Gordon to interact with your GitHub account:
 
    Make sure to allow Gordon to interact with GitHub by selecting **Always allow** in Gordon's answer.
 
-## Install an MCP client
+> [!TIP]
+> By default, the Gordon client is enabled,
+> which means Gordon can automatically interact with your MCP servers.
 
-When you have installed MCP servers, you can add clients to the MCP Toolkit. These clients
-can interact with the installed MCP servers, turning the MCP Toolkit into a gateway.
-
-To install a client:
-
-1. In Docker Desktop, select **MCP Toolkit** and select the **Clients** tab.
-1. Find the client of your choice and select **Connect**.
-
-Your client can now interact with the MCP Toolkit.
 
 ### Example: Use Claude Desktop as a client
 
@@ -160,7 +134,9 @@ and add Claude Desktop as a client:
 
 ### Example: Use Visual Studio Code as a client
 
-You can interact with all your installed MCP servers in VS Code:
+You can interact with all your installed MCP servers in Visual Studio Code:
+
+<!-- vale off -->
 
 1. To enable the MCP Toolkit:
 
@@ -168,7 +144,7 @@ You can interact with all your installed MCP servers in VS Code:
    {{< tabs group="" >}}
    {{< tab name="Enable globally">}}
 
-   1. Insert the following in your VS Code's User`mcp.json`:
+   1. Insert the following in your Visual Studio Code's User`mcp.json`:
 
       ```json
       "mcp": {
@@ -214,6 +190,8 @@ You can interact with all your installed MCP servers in VS Code:
 For more information about the Agent mode, see the
 [Visual Studio Code documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers#_use-mcp-tools-in-agent-mode).
 
+<!-- vale on -->
+
 ## Authenticate via OAuth
 
 You can connect the MCP Toolkit to your development workflow via
@@ -224,7 +202,7 @@ OAuth integration. For now, the MCP Toolkit only supports GitHub OAuth.
 1. In the GitHub entry, select **Authorize**. Your browser opens the GitHub authorization page.
 1. In the GitHub authorization page, select **Authorize Docker**. Once the authorization
    is successful, you are automatically redirected to Docker Desktop.
-1. Install the **GitHub Official** MCP server, see [Install an MCP server](#install-an-mcp-server).
+1. Install the **GitHub Official** MCP server, see [Install an MCP server](/manuals/ai/mcp-catalog-and-toolkit/get-started.md#install-an-mcp-server).
 
 The MCP Toolkit now has access to your GitHub account. To revoke access, select **Revoke** in the **OAuth** tab.
 See an example in [Use the **GitHub Official** MCP server](#example-use-the-github-official-mcp-server).
